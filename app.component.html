@@ -1,0 +1,328 @@
+<div class="container">
+  <h1>Reactive Forms</h1>
+  {{reactiveForm.value | json}}
+  <form [formGroup]="reactiveForm">     <!--Binding the object of FormGroup-->
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" formControlName="username" class="form-control">       <!--Each field must be assigned with form control name, so that we can create an object of formControl for each-->
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" formControlName="password" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" formControlName="confirmPassword" class="form-control">
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+  </form>
+</div>
+
+<br><hr>
+
+<div class="container">
+  <h1>Nesting Form Groups</h1>
+  {{reactiveForm2.value | json}}
+  <form [formGroup]="reactiveForm2">
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" formControlName="username" class="form-control">
+    </div>
+
+    <div formGroupName="address">       <!--U need to give the formGroup name to the div which contains the formcontrols which r grouped into single group-->
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" formControlName="city" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>State</label>
+        <input type="text" formControlName="state" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Postal Code</label>
+        <input type="text" formControlName="postalCode" class="form-control">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+  </form>
+</div>
+
+<br><hr>
+
+<div class="container">
+  <h1>Loading Data into Form</h1>
+  {{reactiveForm3.value | json}}
+  <form [formGroup]="reactiveForm3">
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" formControlName="username" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" formControlName="password" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" formControlName="confirmPassword" class="form-control">
+    </div>
+
+    <div formGroupName="address">
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" formControlName="city" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>State</label>
+        <input type="text" formControlName="state" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Postal Code</label>
+        <input type="text" formControlName="postalCode" class="form-control">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+    <button (click)="loadData()" class="btn btn-secondary ml-2" type="button">Load API Data</button>
+  </form>
+</div>
+
+<br><hr>
+
+<div class="container">
+  <h1>Form Bulider Service</h1>
+  {{reactiveForm4.value | json}}
+  <form [formGroup]="reactiveForm4">
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" formControlName="username" class="form-control">
+    </div>
+
+    <div formGroupName="address">
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" formControlName="city" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>State</label>
+        <input type="text" formControlName="state" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Postal Code</label>
+        <input type="text" formControlName="postalCode" class="form-control">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+  </form>
+</div>
+
+<br><hr>
+
+<div class="container">
+  <h1>Form Bulider Service</h1>
+  {{reactiveForm5.value | json}}
+  <form [formGroup]="reactiveForm5">
+    <div class="form-group">
+      <label>Name</label>
+      <input [class.is-invalid]="reactiveForm5.get('username')?.invalid && reactiveForm5.get('username')?.touched" type="text" formControlName="username" class="form-control">
+      <small [class.d-none]="reactiveForm5.get('username')?.valid || reactiveForm5.get('username')?.untouched" class="text-danger">Username is required</small>
+    </div>
+
+    <!--Instead of using reactiveForm5.get('username') every, u cant create a get method in component.ts file, and return this in that method-->
+    <!--Like the one used for password field below-->
+    <div class="form-group">
+      <label>Password</label>
+      <input [class.is-invalid]="password?.invalid && password?.touched" type="password" formControlName="password" class="form-control">
+      <div *ngIf="password?.invalid && password?.touched">
+        <small *ngIf="password?.errors?.required" class="text-danger">Password is required</small>
+        <small *ngIf="password?.errors?.minlength" class="text-danger">Password must be atleast 3 characters long</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" formControlName="confirmPassword" class="form-control">
+    </div>
+
+    <div formGroupName="address">
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" formControlName="city" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>State</label>
+        <input type="text" formControlName="state" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Postal Code</label>
+        <input type="text" formControlName="postalCode" class="form-control">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+  </form>
+</div>
+
+<br><hr>
+
+<div class="container">
+  <h1>Custom Validation</h1>
+  {{reactiveForm6.value | json}}
+  <form [formGroup]="reactiveForm6">
+    <div class="form-group">
+      <label>Name</label>
+      <input [class.is-invalid]="username?.invalid && username?.touched" type="text" formControlName="username" class="form-control">
+      <div *ngIf="username?.invalid && username?.touched">
+        <small *ngIf="username?.errors?.required" class="text-danger">Username is required</small>
+        <small *ngIf="username?.errors?.minlength" class="text-danger">Username must be atleast 3 characters long</small>
+        <small *ngIf="username?.errors?.forbiddenName" class="text-danger">*{{username?.errors?.forbiddenName.value}} username is not allowed</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input [class.is-invalid]="password2?.invalid && password2?.touched" type="password" formControlName="password" class="form-control">
+      <div *ngIf="password2?.invalid && password2?.touched">
+        <small *ngIf="password2?.errors?.required" class="text-danger">Password is required</small>
+        <small *ngIf="password2?.errors?.minlength" class="text-danger">Password must be atleast 3 characters long</small>
+        <small *ngIf="password2?.errors?.forbiddenPwd" class="text-danger">*Password cannot be {{password2?.errors?.forbiddenPwd.value}}</small>
+      </div>
+    </div>
+
+    <div formGroupName="address">
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" formControlName="city" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>State</label>
+        <input type="text" formControlName="state" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Postal Code</label>
+        <input type="text" formControlName="postalCode" class="form-control">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+  </form>
+</div>
+
+<br><hr>
+
+<div class="container">
+  <h1>Cross Field Validation</h1>
+  {{reactiveForm7.value | json}}
+  <form [formGroup]="reactiveForm7">
+    <div class="form-group">
+      <label>Name</label>
+      <input [class.is-invalid]="username3?.invalid && username3?.touched" type="text" formControlName="username" class="form-control">
+      <div *ngIf="username3?.invalid && username3?.touched">
+        <small *ngIf="username3?.errors?.required" class="text-danger">Username is required</small>
+        <small *ngIf="username3?.errors?.minlength" class="text-danger">Username must be atleast 3 characters long</small>
+        <small *ngIf="username3?.errors?.forbiddenName" class="text-danger">*{{username3?.errors?.forbiddenName.value}} username is not allowed</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input [class.is-invalid]="password3?.invalid && password3?.touched" type="password" formControlName="password" class="form-control">
+      <div *ngIf="password3?.invalid && password3?.touched">
+        <small *ngIf="password3?.errors?.required" class="text-danger">Password is required</small>
+        <small *ngIf="password3?.errors?.minlength" class="text-danger">Password must be atleast 3 characters long</small>
+        <small *ngIf="password3?.errors?.forbiddenPwd" class="text-danger">*Password cannot be {{password2?.errors?.forbiddenPwd.value}}</small>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input [class.is-invalid]="reactiveForm7?.errors?.mismatch" type="password" formControlName="confirmPassword" class="form-control">
+      <small *ngIf="reactiveForm7?.errors?.mismatch" class="text-danger">*Passwords do not match</small>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+  </form>
+</div>
+
+<br><hr>
+
+<div class="container">
+  <h1>Conditional Validation</h1>
+  {{reactiveForm8.value | json}}
+  <form [formGroup]="reactiveForm8">
+    <div class="form-group">
+      <label>Name</label>
+      <input [class.is-invalid]="username4?.invalid && username4?.touched" type="text" formControlName="username" class="form-control">
+      <div *ngIf="username4?.invalid && username4?.touched">
+        <small *ngIf="username4?.errors?.required" class="text-danger">Username is required</small>
+        <small *ngIf="username4?.errors?.minlength" class="text-danger">Username must be atleast 3 characters long</small>
+        <small *ngIf="username4?.errors?.forbiddenName" class="text-danger">*{{username4?.errors?.forbiddenName.value}} username is not allowed</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input [class.is-invalid]="email.invalid && email.touched" type="email" formControlName="email" class="form-control">
+      <small [class.d-none]="email.valid || email.untouched" class="text-danger">Email is required</small>
+    </div>
+
+    <div class="form-group">
+      <input type="checkbox" formControlName="subscribe" class="form-check-input">
+      <label class="form-check-label">Send me promotional offers</label>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+  </form>
+</div>
+
+<br><hr>
+
+<div class="container">
+  <h1>Dynamic Forms</h1>
+  {{reactiveForm9.value | json}}
+  <form [formGroup]="reactiveForm9">
+    <div class="form-group">
+      <label>Name</label>
+      <input [class.is-invalid]="username5?.invalid && username5?.touched" type="text" formControlName="username" class="form-control">
+      <div *ngIf="username5?.invalid && username5?.touched">
+        <small *ngIf="username5?.errors?.required" class="text-danger">Username is required</small>
+        <small *ngIf="username5?.errors?.minlength" class="text-danger">Username must be atleast 3 characters long</small>
+        <small *ngIf="username5?.errors?.forbiddenName" class="text-danger">*{{username5?.errors?.forbiddenName.value}} username is not allowed</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <button type="button" class="btn btn-secondary btn-sm m-2" (click)="addAlternateEmail()">Add Email</button>
+      <input [class.is-invalid]="email2.invalid && email2.touched" type="email" formControlName="email" class="form-control">
+      <small [class.d-none]="email2.valid || email2.untouched" class="text-danger">Email is required</small>
+      <div formArrayName="alternateEmails" *ngFor="let email of alternateEmails.controls; let i=index">
+        <input type="text" class="form-control" [formControlName]="i">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="checkbox" formControlName="subscribe" class="form-check-input">
+      <label class="form-check-label">Send me promotional offers</label>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+  </form>
+</div>
+
